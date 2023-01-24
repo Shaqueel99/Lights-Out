@@ -48,6 +48,7 @@ void Player::Update() {
 		return;
 	
 	//CheckOutOfBound();
+
 	CheckJumpInputs();
 	Update_Position();
 	UpdatePlayerAnimationMesh();
@@ -76,13 +77,21 @@ void Player::Render(void)
 {
 	if (!active)
 		return;
-
+		static float lighting = 105.0f;
+		lighting += 0.25f;
+		
+		rect.Set_Texture(playerParticle);
+		circle.Set_Texture(playerMovTex);
 		sprite.Set_Texture(playerTex);
 		sprite.Draw_Texture(0, 0, Mesh::PlayerCurr, 255.0f);
+		circle.Draw_Texture(lighting);
+		//rect.Draw_Texture(0, 0, Mesh::PlayerCurr, 100.0f);
+		
 		UI::DisplayLife(hp.current);
 
 
 }
+
 void Player::SetPlayerLose(void)
 {
 	lose = true;
@@ -91,9 +100,8 @@ void Player::SetPlayerLose(void)
 }
 void Player::LoadTex(void) {
 	playerTex		= AEGfxTextureLoad(FP::PLAYER::Sprite);
-
 	playerMovTex	= AEGfxTextureLoad(FP::BACKGROUND::Victory);
-	playerParticle	= AEGfxTextureLoad(FP::PLAYER::Sprite);
+	playerParticle	= AEGfxTextureLoad(FP::BACKGROUND::Pause);
 	AE_ASSERT_MESG(playerTex,		"Failed to create Player spirte sheet Idle");
 	AE_ASSERT_MESG(playerMovTex,	"Failed to create Player sprite sheet run!");
 	AE_ASSERT_MESG(playerParticle,	"Failed to create Player Particle texture!");
@@ -145,6 +153,11 @@ void Player::Update_Position(void)
 	}
 
 	AEGfxSetCamPosition(sprite.pos.x - AEGetWindowWidth() / 2, AEGetWindowHeight() / 2 - sprite.pos.y);
+	circle.pos = sprite.pos;
+	rect.pos = sprite.pos;
+
+	
+	
 }
 
 void Player::UpdateColliders()
@@ -247,6 +260,7 @@ void Player::Respawn(void)
 	jump = false;
 	jumpvel = PLAYER_CONST::JUMPVEL;
 	sprite.pos = startingPos;
+
 	chargedjump = false;
 	chargedjumpvel = PLAYER_CONST::CHARGED_JUMPVEL;
 	sprite.rotation = 0;
@@ -354,9 +368,13 @@ void Player::CheckEnemyCollision(std::vector <Enemies>& enemy)
 void Player::CreatePlayer(Player& player, const AEVec2 pos, const f32 width, const f32 height)
 {
 	player.sprite.Set(playerTex, width, height, pos, Mesh::PlayerCurr);
-	player.startingPos = pos;
-	player.sprite.pos = player.startingPos;
 	
+	//player.rect.Set(playerParticle, 800, 600, pos, Mesh::PlayerCurr);
+	player.circle.Set(playerMovTex, 800, 700, pos, Mesh::Rect);
+	player.startingPos = pos;
+	//player.rect.pos = player.startingPos;
+	player.sprite.pos = player.startingPos;
+	player.circle.pos = player.startingPos;
 	player.collider.SetWidthHeight(player.collider.sprite, width, height);
 	player.collider.SetWidthHeight(player.collider.top, width - 4.0f, height / 4.0f);
 	player.collider.SetWidthHeight(player.collider.left, width / 2.0f - PLAYER_CONST::COLLIDER_SIDE_OFFSET_X, height - 10.0f);

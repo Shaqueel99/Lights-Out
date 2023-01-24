@@ -32,6 +32,7 @@ private:
 	void ChangeDirection(void);
 	void Respawn(void);
 
+
 public:
 	static AEGfxTexture* playerTex;
 	static AEGfxTexture* playerMovTex;
@@ -40,6 +41,7 @@ public:
 	Player();
 	Image sprite;
 	Image circle;
+	Image rect;
 	Collider collider;
 	AEVec2 startingPos, vel;
 	bool active, jump, gravity, chargedjump;
