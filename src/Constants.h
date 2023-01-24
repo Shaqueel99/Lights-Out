@@ -27,8 +27,7 @@ namespace FILE_PATHS {
 	}
 	namespace PLAYER {
 		extern const char* Sprite;
-		extern const char* SpriteSheetRun;
-		extern const char* SpriteSheetIdle;
+
 	}
 	namespace TILE {
 		extern const char* Goal;

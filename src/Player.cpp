@@ -97,8 +97,8 @@ void Player::SetPlayerLose(void)
 	
 }
 void Player::LoadTex(void) {
-	playerTex		= AEGfxTextureLoad(FP::PLAYER::SpriteSheetIdle);
-	playerMovTex	= AEGfxTextureLoad(FP::PLAYER::SpriteSheetRun);
+	playerTex		= AEGfxTextureLoad(FP::PLAYER::Sprite);
+	playerMovTex	= AEGfxTextureLoad(FP::PLAYER::Sprite);
 	playerParticle	= AEGfxTextureLoad(FP::PLAYER::Sprite);
 	AE_ASSERT_MESG(playerTex,		"Failed to create Player spirte sheet Idle");
 	AE_ASSERT_MESG(playerMovTex,	"Failed to create Player sprite sheet run!");
@@ -306,7 +306,7 @@ void Player::GravityManager(void)
 	if (gravity && !jump && !chargedjump)
 	{
 		
-			if (gravityMultiplier <= 35.0f) {
+			if (gravityMultiplier <= 25.0f) {
 				gravityMultiplier += g_dt * 20;
 			}
 			sprite.pos.y += (gravityStrength * (g_dt * gravityMultiplier));

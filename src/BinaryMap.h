@@ -10,7 +10,7 @@ enum class TYPE_OBJECT
 	NON_COLLAPSIBLE,			//2
 	SPECIAL,					//3
 	GOAL,						//4
-	JUMPERMAN,					//5
+	MAN,					//5
 	SLIME,						//6
 	BAT,						//7	
 	SQUIRREL,					//8

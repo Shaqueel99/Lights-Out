@@ -24,9 +24,9 @@ namespace FILE_PATHS {
 		const char* SquirrelSpriteSheet		= "./Assets/Art/Enemy/SquirrelSpriteSheet.png";
 	}
 	namespace PLAYER {
-		const char* Sprite					= "./Assets/Art/Player/Jumperman.png";
-		const char* SpriteSheetRun			= "./Assets/Art/Player/Jumperman_Run_Spritesheet.png";
-		const char* SpriteSheetIdle			= "./Assets/Art/Player/Jumperman_Idle_Spritesheet.png";
+		const char* Sprite					= "./Assets/Art/Player/download.png";
+		const char* SpriteSheetRun			= "./Assets/Art/Player/download.png";
+		const char* SpriteSheetIdle			= "./Assets/Art/Player/download.png";
 	}
 	namespace TILE {
 		const char* Grey					= "./Assets/Art/Tiles/Safe_Tile.png";

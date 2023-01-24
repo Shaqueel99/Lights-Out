@@ -30,7 +30,7 @@ static AEVec2 ScreenMid;
 static Image lives;
 
 
-extern Player Jumperman;
+extern Player man;
 
 void UI::Init() {
 
@@ -48,7 +48,7 @@ void UI::Init() {
 	memset(strBuffer1, 0, 100 * sizeof(char));
 	memset(strBuffer2, 0, 100 * sizeof(char));
 
-	lives.Load(FP::UI::HeartSprite, 35.0f, 35.0f, AEVec2Zero());
+	
 
 
 }
@@ -68,7 +68,7 @@ void UI::Update() {
 	LevelDisplay.SetText(strBuffer1);
 	TimerDisplay.SetText(strBuffer2);
 
-	if (GAMEPLAY_MISC::PAUSED && !Jumperman.GetWinStatus() && !Jumperman.GetLoseStatus())
+	if (GAMEPLAY_MISC::PAUSED && !man.GetWinStatus() && !man.GetLoseStatus())
 		UI::PausedUpdate();
 
 	UI::Draw();
@@ -83,14 +83,12 @@ void UI::Draw() {
 	TimerDisplay.Draw_Wrapped(AEVec2Set(AEGetWindowWidth() - Pos2.x / 2.0f, Pos2.y / 2.0f));
 	LevelDisplay.Draw_Wrapped(AEVec2Set(Pos.x / 2.0f, Pos.y / 2.0f));
 
-	if (GAMEPLAY_MISC::PAUSED && !Jumperman.GetWinStatus() && !Jumperman.GetLoseStatus())
+	if (GAMEPLAY_MISC::PAUSED && !man.GetWinStatus() && !man.GetLoseStatus())
 		UI::PausedRender();
 }
 
 void UI::DisplayLife(short livesCount) {
-	for (short i = 0; i < livesCount; ++i) {
-		lives.Draw_Texture(AEVec2Set(lives.width / 2.0f + i * 50.0f, 50.0f), 255.0f);
-	}
+
 }
 
 void UI::PausedInit()

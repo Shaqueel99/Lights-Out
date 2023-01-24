@@ -95,7 +95,7 @@ void Image::Draw_Texture(AEVec2 Pos, const f32 alpha, const f32 r, const f32 g, 
 	AEGfxMeshDraw(pMesh, AE_GFX_MDM_TRIANGLES);
 }
 
-// Author: Wee Boon
+
 
 int count = 0;
 int slimeCount = 0;
