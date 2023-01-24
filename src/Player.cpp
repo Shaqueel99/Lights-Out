@@ -23,7 +23,7 @@ AEGfxTexture* Player::playerTex{ nullptr };
 AEGfxTexture* Player::playerMovTex{ nullptr };
 AEGfxTexture* Player::playerParticle{ nullptr };
 float Player::gravityStrength = 20.0f;
-static bool isSoundPlayed;
+
 
 Player::Player(AEGfxTexture* texture, const f32 width, const f32 height) : sprite(texture, Mesh::PlayerCurr, width, height), lose{ false },
 active{ true }, gravity{ false }, jump{ false }, chargedjump{ false }, playerWin{ false }, startingPos{ 0, 0 }, vel{ 0, 0 }, jumpvel{ PLAYER_CONST::JUMPVEL },
@@ -76,17 +76,10 @@ void Player::Render(void)
 {
 	if (!active)
 		return;
-	if (Mesh::PlayerCurr == Mesh::Anim)
-	{
+
 		sprite.Set_Texture(playerTex);
-		sprite.Draw_Texture(20, PLAYER_CONST::PLAYER_IDLE_OFFSET_X, Mesh::PlayerCurr, 255.0f);
-	}
-	else if (Mesh::PlayerCurr == Mesh::Anim2)
-	{
-		sprite.Set_Texture(playerMovTex);
-		sprite.Draw_Texture(5, PLAYER_CONST::PLAYER_RUN_OFFSET_X, Mesh::PlayerCurr, 255.0f);
-	}
-	UI::DisplayLife(hp.current);
+		sprite.Draw_Texture(0, 0, Mesh::PlayerCurr, 255.0f);
+		UI::DisplayLife(hp.current);
 
 
 }
@@ -98,7 +91,8 @@ void Player::SetPlayerLose(void)
 }
 void Player::LoadTex(void) {
 	playerTex		= AEGfxTextureLoad(FP::PLAYER::Sprite);
-	playerMovTex	= AEGfxTextureLoad(FP::PLAYER::Sprite);
+
+	playerMovTex	= AEGfxTextureLoad(FP::BACKGROUND::Victory);
 	playerParticle	= AEGfxTextureLoad(FP::PLAYER::Sprite);
 	AE_ASSERT_MESG(playerTex,		"Failed to create Player spirte sheet Idle");
 	AE_ASSERT_MESG(playerMovTex,	"Failed to create Player sprite sheet run!");
@@ -149,7 +143,7 @@ void Player::Update_Position(void)
 			direction = SpriteDirection::Left;
 		}
 	}
-	
+
 	AEGfxSetCamPosition(sprite.pos.x - AEGetWindowWidth() / 2, AEGetWindowHeight() / 2 - sprite.pos.y);
 }
 
@@ -375,5 +369,4 @@ void Player::CreatePlayer(Player& player, const AEVec2 pos, const f32 width, con
 
 	player.hp.current = player.hp.max;
 
-	isSoundPlayed = false;
 }

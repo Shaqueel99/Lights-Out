@@ -62,9 +62,7 @@ void MainMenu::Init(void)
 	const int TilesNum = static_cast<int>(WindowWidth / TileWidth);
 
 	Tiles::AddTileRow(tiles, TileType::Grass, TilesNum + 1, TileWidth, TileHeight, AEVec2{ TileWidth / 2.0f, WindowHeight - TileHeight });
-	Enemies::AddNew(enemy, EnemyType::Slime,	AEVec2{ 260.0f, tiles[0].image.pos.y - TileHeight / 2.0f }, EnemyWidth, EnemyHeight);
-	Enemies::AddNew(enemy, EnemyType::Bat,		AEVec2{ 520.0f, tiles[0].image.pos.y - TileHeight / 2.0f }, EnemyWidth, EnemyHeight);
-	Enemies::AddNew(enemy, EnemyType::Squirrel, AEVec2{ 710.0f, tiles[0].image.pos.y - TileHeight / 2.0f }, EnemyWidth, EnemyHeight);
+	
 
 
 	player.push_back(Player(Player::playerTex, playerWidth, playerHeight));
@@ -105,7 +103,7 @@ void MainMenu::Update(void)
 void MainMenu::Render() {
 	Background::ObjectsRender();
 	for (int i = 0; i < tiles.size(); ++i) {
-		tiles[i].image.Draw_Texture(255.0f);
+	//	tiles[i].image.Draw_Texture(255.0f);
 	}
 
 

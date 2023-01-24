@@ -39,6 +39,7 @@ public:
 	Player(AEGfxTexture*, const f32 width, const f32 height);
 	Player();
 	Image sprite;
+	Image circle;
 	Collider collider;
 	AEVec2 startingPos, vel;
 	bool active, jump, gravity, chargedjump;

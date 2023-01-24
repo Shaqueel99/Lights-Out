@@ -47,6 +47,7 @@ SceneType& operator++(SceneType& rhs) {
 
 void Background::Load()
 {
+	AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
 	ObjectsLoad();
 
 	const int BtnCount{ 4 };
@@ -102,7 +103,7 @@ void Background::Init()
 
 void Background::Update()
 {
-	//LerpBackgroundColor();
+	
 	ObjectsUpdate();
 }
 
@@ -110,8 +111,9 @@ void Background::Render(const Player& player)
 {
 	if (!GAMEPLAY_MISC::DISPLAY_QUIT_UI && (GAMEPLAY_MISC::PAUSED && player.active && !player.GetWinStatus()))
 	{
-		BgOverlayArr[BackgroundIndex::Pause].Draw_Texture(100.0f);
+		
 		text.SetText("PAUSED");
+		text.SetTextColor(Color{ 255.0f,255.0f,255.0f,255.0f });
 		text.Draw_Wrapped(text.pos);
 	}
 	else if (player.GetLoseStatus())
@@ -137,7 +139,7 @@ void Background::Render(const Player& player)
 		
 		
 
-		int btnNum; // Only update one button at level 8 since last level.
+		int btnNum; 
 
 		GAMEPLAY_MISC::Level == LevelSys.GetMaxLevel() - 1 ? btnNum = 1 
 														   : btnNum = 2;
@@ -190,7 +192,7 @@ void Background::Unload()
 }
 void Background::LerpBackgroundColor(void)
 {
-	static const float LerpFactor{ 0.000005f }; // per t increment
+	static const float LerpFactor{ 0.5f }; // per t increment
 	LerpColorDestination = SceneColors[static_cast<int>(NextScene)];
 
 	if (SceneColor == LerpColorDestination) {
