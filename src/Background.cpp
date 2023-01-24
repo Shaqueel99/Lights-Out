@@ -9,10 +9,8 @@
 #include "AEEngine.h"
 #include "LevelSystem.h"
 #include "Particles.h"
-#include "Leaderboard.h"
 #include "LevelSystem.h"
-#include "GameMode.h"
-#include "Username.h"
+
 
 #include <array>
 #include <vector>
@@ -38,7 +36,7 @@ static SceneType CurrentScene, NextScene;
 static float  WindowWidth, WindowHeight, tLerp;
 static bool isScoreInserted;
 
-static GameMode gameMode;
+
 
 extern LevelSystem LevelSys;
 
@@ -87,7 +85,7 @@ void Background::Load()
 	text.SetPos(AEVec2Set(Midpt.x, Midpt.y + TextPosYOffset));
 	text.SetTextColor(Color{ 0, 0, 0, Color::RGBA_MAX });
 	text.SetTextScale(TitleTextScale);
-	text.SetFontID(fontID::Pixel_Digivolve);
+	text.SetFontID(fontID::Roboto);
 
 	BgOverlayArr[BackgroundIndex::Pause].Load(FP::BACKGROUND::Pause, WindowWidth, WindowHeight, Midpt);
 	BgOverlayArr[BackgroundIndex::Victory].Load(FP::BACKGROUND::Victory, WindowWidth, WindowHeight, Midpt);
@@ -98,10 +96,8 @@ void Background::Init()
 {
 	ObjectsInit();
 	isScoreInserted = false;
-	gameMode = GameModeSetting::GetGameMode();
+	
 
-	if (gameMode == GameMode::TimeAttack)
-		MenuBtn[2].Set_Position(AEVec2Set(Midpt.x, WindowHeight - MenuBtn[2].GetHeight() / 2.0f));
 }
 
 void Background::Update()
@@ -123,10 +119,7 @@ void Background::Render(const Player& player)
 		if(!GAMEPLAY_MISC::PAUSED)
 			Utils::TogglePause();
 
-		if (gameMode == GameMode::Casual)
-			RenderCasual();
-		else
-			RenderTimeAttack();
+		
 
 	}
 	else if (player.GetWinStatus())
@@ -141,29 +134,7 @@ void Background::Render(const Player& player)
 
 		text.Draw_Wrapped({ text.pos.x, text.pos.y - 120.0f });
 		
-		if (gameMode == GameMode::TimeAttack && GAMEPLAY_MISC::Level == 8)
-		{
-			int time_remaining = static_cast<int>(GAMEPLAY_MISC::TimeAttack_remaining);
-			text.SetText(std::to_string(time_remaining));
-			text.SetText("YOUR SCORE: " + std::to_string(time_remaining));
-			text.Draw_Wrapped({ text.pos.x, text.pos.y - 50.0f });
-
-			if (isScoreInserted) {
-				text.SetText("You won a place on the leaderboard!");
-				text.Draw_Wrapped({ text.pos.x, text.pos.y + 50.0f });
-			}
-
-			Leader L = Leaderboard::GetLastPlacement();
-
-			if (!isScoreInserted && L.score < GAMEPLAY_MISC::TimeAttack_remaining)
-			{
-				Leader newleader;
-				newleader.name = Username::GetUsername();
-				newleader.score = static_cast<int>(GAMEPLAY_MISC::TimeAttack_remaining);
-				L.InsertNewLeader(newleader);
-				isScoreInserted = true;
-			}
-		}
+		
 		
 
 		int btnNum; // Only update one button at level 8 since last level.

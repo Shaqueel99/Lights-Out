@@ -86,17 +86,14 @@ void Graphics::Load_Meshes(void)
 
 void Graphics::Load_Fonts(void)
 {
-	fontID::Strawberry_Muffins_Demo = AEGfxCreateFont(FP::FONT::Strawberry_Muffins_Demo, 40);
+
 	fontID::Roboto = AEGfxCreateFont(FP::FONT::Roboto, 40);
-	fontID::Courier = AEGfxCreateFont(FP::FONT::Courier, 40);
-	fontID::Pixel_Digivolve = AEGfxCreateFont(FP::FONT::Pixel_Digivolve, 40);
+
 }
 
 void Graphics::Free() {
 	AEGfxDestroyFont(fontID::Roboto);
-	AEGfxDestroyFont(fontID::Courier);
-	AEGfxDestroyFont(fontID::Strawberry_Muffins_Demo);
-	AEGfxDestroyFont(fontID::Pixel_Digivolve);
+
 
 	AEGfxMeshFree(Mesh::Rect);
 	AEGfxMeshFree(Mesh::Circle);
@@ -266,25 +263,25 @@ AEVec2 Graphics::Text::Calculate_Offset(AEVec2 Pos)
 	f32 HalfWinHeight = Utils::Get_HalfWindowHeight();
 
 	AEVec2 Offset{0, 0};
-	if (Pos.x < HalfWinWidth) // I want negative
+	if (Pos.x < HalfWinWidth)
 	{
 		Offset.x = (-HalfWinWidth + Pos.x) / HalfWinWidth; 
 	}
-	else if (Pos.x > HalfWinWidth) // big postive number.
+	else if (Pos.x > HalfWinWidth) 
 	{
 		Offset.x = (Pos.x - HalfWinWidth) / HalfWinWidth;
 	}
 
-	if (Pos.y > HalfWinHeight) // Big value, prints at bottom of screen.
+	if (Pos.y > HalfWinHeight) 
 	{
-		Offset.y = (HalfWinHeight -Pos.y) / HalfWinHeight; // Negative (
+		Offset.y = (HalfWinHeight -Pos.y) / HalfWinHeight;
 	}
 
-	else if (Pos.y < HalfWinHeight)  // Small value, prints at top of screen
+	else if (Pos.y < HalfWinHeight) 
 	{
 		Offset.y = (HalfWinHeight - Pos.y) / HalfWinHeight;
 	}
-	//printf("%.2f %.2f\n", Offset.x, Offset.y);
+
 	return Offset;
 }
 

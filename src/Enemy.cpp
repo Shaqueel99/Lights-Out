@@ -4,7 +4,7 @@
 #include "Utilities.h"
 #include "Particles.h"
 #include "Globals.h"
-#include "AudioManager.h"
+
 
 #include <iostream>
 #include <array>
@@ -21,8 +21,6 @@ int Enemies::jump_counter = 5;
 static AEGfxTexture* enemyTex[static_cast<int>(EnemyType::Max)]{ nullptr };
 static AEGfxTexture* enemyParticleTex[static_cast<int>(EnemyType::Max)]{ nullptr };
 
-extern AudioManager Audio;
-extern std::array <AudioClass, static_cast<int>(AudioID::Max)> AudioArray;
 
 Enemies::Enemies(AEGfxTexture* filepath, AEGfxVertexList* mesh, const f32 width, const f32 height) : sprite(filepath, mesh, width, height), collider(),
 spawnPos{ 0, 0 }, active{ true }, type{ EnemyType::Slime }, isGravity{ false }, counter{ 0 }, jumpcounter{ 5 }, squirrelJump { false },
@@ -199,17 +197,7 @@ EnemyType& operator++(EnemyType& rhs) {
 }
 void Enemies::PlayDeathSFX()
 {
-	switch (type) {
-	case EnemyType::Bat:
-		Audio.playAudio(AudioArray[static_cast<int>(AudioID::Boink)], AudioID::Boink);
-		return;
-	case EnemyType::Slime:
-		Audio.playAudio(AudioArray[static_cast<int>(AudioID::SlimeDeath)], AudioID::SlimeDeath);
-		return;
-	case EnemyType::Squirrel:
-		Audio.playAudio(AudioArray[static_cast<int>(AudioID::SquirrelDeath)], AudioID::SquirrelDeath);
-		return;
-	}
+	
 }
 void Enemies::CheckOutOfBound()
 {

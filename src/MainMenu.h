@@ -18,10 +18,7 @@ namespace MainMenu
 
 	void SwitchToMainMenu(void);
 	void SwitchToLevelSelection(void);
-	void SwitchToCreditScreen(void);
 	void SwitchToSettings();
-	void SwitchToLeaderboard(void);
-	void SwitchToUsername(void);
 	void SwitchToControl(void);
 }
 
@@ -37,14 +34,4 @@ namespace Options {
 	void Update();
 	void Render();
 	void Unload();
-}
-
-namespace Credits {
-	void Init();
-	void Update();
-	void Render();
-	void Unload();
-
-	void IncrementOverlay();
-	void DecrementOverlay();
 }

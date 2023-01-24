@@ -14,7 +14,6 @@
 #include <ctime>
 #include <cstdlib>
 #include <crtdbg.h>
-#include "Leaderboard.h"
 // ---------------------------------------------------------------------------
 // main
 
@@ -44,7 +43,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	Graphics::Load_Fonts();
 	Graphics::Load_Meshes();
-	Leaderboard::Load();
+
 
 	// Initialises the GSM
 	GameStateManagerInit();
@@ -103,7 +102,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		gamestatePrev = gamestateCurr;
 		gamestateCurr = gamestateNext;
 	}
-	Leaderboard::Save();
+
 	Graphics::Free();
 	AESysExit();
 }

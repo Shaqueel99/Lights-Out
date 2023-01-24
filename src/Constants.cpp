@@ -43,12 +43,7 @@ namespace FILE_PATHS {
 		const char* Guide6					= "./Assets/Art/Guide/Guide6.png";
 		const char* Guide7					= "./Assets/Art/Guide/Guide7.png";
 	}
-	namespace CREDITS {
-		const char* Screen1					= "./Assets/Art/Credits/CreditScreen1.jpg";
-		const char* Screen2					= "./Assets/Art/Credits/CreditScreen2.jpg";
-		const char* Screen3					= "./Assets/Art/Credits/CreditScreen3.jpg";
-		const char* Screen4					= "./Assets/Art/Credits/CreditScreen4.jpg";
-	}
+
 	namespace UI {
 		const char* HeartSprite				= "./Assets/Art/Heart.png";
 	}
@@ -56,29 +51,14 @@ namespace FILE_PATHS {
 
 	namespace FONT {
 		const char* Roboto					= "./Assets/Font/Roboto-Regular.ttf";
-		const char* Courier					= "./Assets/Font/COURIER.ttf";
-		const char* Pixel_Digivolve			= "./Assets/Font/Pixel Digivolve.otf";
-		const char* Strawberry_Muffins_Demo = "./Assets/Font/Strawberry_Muffins_Demo.ttf";
 	}
-	namespace SFX {
-		const char* Jump					= "./Assets/Audio/SFX/COMEDY-WHISTLE_GEN-HDF-08150.wav";
-		const char* Boink					= "./Assets/Audio/SFX/BoingCartoon CTE01_38.2.wav";
-		const char* SlimeDeath				= "./Assets/Audio/SFX/SquirtCartoon CTE02_63.5.wav";
-		const char* PlayerLose				= "./Assets/Audio/SFX/COMEDY-WHISTLE_GEN-HDF-08162.wav";
-		const char* PlayerDeath				= "./Assets/Audio/SFX/COMEDY-WHISTLE_GEN-HDF-08158.wav";
-		const char* SquirrelDeath			= "./Assets/Audio/SFX/SqueakToy CTE02_62.2.wav";
-	}
+
 
 	namespace BUTTONS {
-		const char* RedBtn					= "./Assets/Art/Buttons/RedBtn.png";
-		const char* BlueBtn					= "./Assets/Art/Buttons/BlueBtn.png";
-		const char* GreenBtn				= "./Assets/Art/Buttons/GreenBtn.png";
-		const char* LockedBtn				= "./Assets/Art/Buttons/LockedBtn.png";
+		const char* Btn					= "./Assets/Art/Buttons/Btn.png";
 	}
 
-	namespace BGM {
-		const char* Gameplay				= "./Assets/Audio/BGM/Gameplay.wav";
-	}
+
 }
 namespace PLAYER_CONST {
 	const float SPEED						= 150.0f;

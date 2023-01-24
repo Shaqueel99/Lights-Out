@@ -3,7 +3,7 @@
 #include "Constants.h"
 #include "Utilities.h"
 #include "Player.h"
-#include "Username.h"
+
 
 #include <cstring>
 #include <vector>
@@ -11,11 +11,11 @@
 
 Button::Button(ButtonType Type, const f32 width, const f32 height, const f32 scale) : button(width, height), text(std::string(), scale)
 , callback_void{ nullptr }, pTex{ nullptr }, type{ Type }, ID{ 0 }, callback_short{ nullptr } {
-	buttonState[static_cast<int>(ButtonState::Idle)] = { 0, 255.0f, 0, 255.0f };
-	buttonState[static_cast<int>(ButtonState::Hovered)] = { 255.0f, 255.0f, 0, 255.0f };
-	buttonState[static_cast<int>(ButtonState::Clicked)] = { 0, 0, 255.0f, 255.0f };
+	buttonState[static_cast<int>(ButtonState::Idle)] = { 0, 0, 0, 0.0f };
+	buttonState[static_cast<int>(ButtonState::Hovered)] = { 0, 0, 0, 0.0f };
+	buttonState[static_cast<int>(ButtonState::Clicked)] = { 0, 0, 0, 0.0f };
 	text.color = { 0, 0, 0, 255.0f };
-	text.SetText("");
+
 	if (type == ButtonType::Texture) {
 		SetBtnType(ButtonType::Texture);
 	}
@@ -119,7 +119,7 @@ ButtonState Button::Check_State() {
 	return ButtonState::Idle;
 }
 
-// Author: Min Yi
+
 bool Button::OnClick(void) {
 	AEVec2 Mouse = Utils::GetMousePos();
 	if (AETestPointToRect(&Mouse, &button.pos, button.width, button.height) && AEInputCheckReleased(AEVK_LBUTTON))

@@ -42,12 +42,12 @@ void Control::Init()
 		}
 		else if (i % 2 == 0) {
 			ControlBtn[i].SetBtnType(ButtonType::Texture);
-			ControlBtn[i].Load_Texture(FP::BUTTONS::BlueBtn);
+			ControlBtn[i].Load_Texture(FP::BUTTONS::Btn);
 			ControlBtn[i].ChangeStateColor(ButtonState::Hovered, Color{ 0.0f, 255.0f, 255.0f, 255.0f });
 		}
 		else {
 			ControlBtn[i].SetBtnType(ButtonType::Texture);
-			ControlBtn[i].Load_Texture(FP::BUTTONS::BlueBtn);
+			ControlBtn[i].Load_Texture(FP::BUTTONS::Btn);
 			ControlBtn[i].ChangeStateColor(ButtonState::Hovered, Color{ 255.0f, 255.0f, 0.0f, 255.0f });
 		}
 
@@ -59,7 +59,7 @@ void Control::Init()
 	ControlBtn[ARROW].Set_Text("Arrow Keys");
 
 	for (size_t i = 0; i < ControlBtn.size(); ++i) {
-		ControlBtn[i].SetFontID(fontID::Courier);
+		ControlBtn[i].SetFontID(fontID::Roboto);
 	}
 }
 
@@ -96,7 +96,7 @@ void Control::Render()
 	ControlTxt.SetText("Control");
 	ControlTxt.SetTextColor(Color{ 255.0f, 0.0f, 0.0f, 255.0f });
 	ControlTxt.Draw_Wrapped(AEVec2Set(ScreenMid.x, AEGetWindowHeight() * 0.15f));
-	ControlTxt.SetFontID(fontID::Strawberry_Muffins_Demo);
+	ControlTxt.SetFontID(fontID::Roboto);
 
 
 	// Preferred Control text
@@ -110,7 +110,7 @@ void Control::Render()
 	PreferredControlTxt.SetTextColor(Color{ 0.0f, 0.0f, 0.0f, 255.0f });
 	PreferredControlTxt.SetTextScale(1.0f);
 	GAMEPLAY_MISC::ARROW_KEYS == true ? PreferredControlTxt.SetText("Arrow Keys") : PreferredControlTxt.SetText("WASD Keys");
-	PreferredControlTxt.SetFontID(fontID::Courier);
+	PreferredControlTxt.SetFontID(fontID::Roboto);
 	PreferredControlTxt.Draw_Wrapped(AEVec2Set(ScreenMid.x, 270.0f));
 }
 

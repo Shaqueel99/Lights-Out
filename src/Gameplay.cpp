@@ -13,7 +13,7 @@
 #include "Particles.h"
 #include "MainMenu.h"
 #include "Globals.h"
-#include "Leaderboard.h"
+
 
 #include <iostream>
 #include <vector>
@@ -28,9 +28,7 @@ std::vector<Enemies> enemies;
 std::vector <std::vector <Tiles>*> tileManager;
 Player Jumperman;
 
-extern AudioManager Audio;
-extern AudioData soundData[static_cast<int>(AudioID::Max)];
-extern std::array <AudioClass, static_cast<int>(AudioID::Max)> AudioArray;
+
 extern AEVec2 EntitySizeArray[static_cast<int>(EntitySizes::MAX)];
 
 void Gameplay::Init(void)
@@ -98,7 +96,7 @@ void Gameplay::Update()
 	//Background::ObjectsUpdate();
 	//Background::Update();
 	EntitiesUpdate();
-	Audio.update();
+
 	Utils::DebugKeysManager();
 	if (AEInputCheckReleased(AEVK_R))
 	{
@@ -154,10 +152,6 @@ void Gameplay::Load()
 	Particles::Load();
 	Enemies::LoadTex();
 	Player::LoadTex();
-	AudioManager::loadAsset();
-	AudioManager::SetVolume(AudioID::BGM, 0.05f);
-	AudioManager::SetVolume(AudioID::Jump, 0.05f);
-	Audio.playAudio(AudioArray[static_cast<int>(AudioID::BGM)], AudioID::BGM, true);
 	Background::Load();
 	Background::Init();
 }
@@ -168,7 +162,6 @@ void Gameplay::Unload()
 	Enemies::Unload();
 	Particles::Unload();
 	Player::Unload();
-	AudioManager::unloadAsset();
 	FreeMapData();
 	Background::Unload();
 }

@@ -2,7 +2,7 @@
 #pragma once
 #include "AEEngine.h"
 #include "Graphics.h"
-#include "AudioManager.h"
+
 
 enum class ButtonState{Idle = 0, Hovered, Clicked, MaxColor};
 enum class ButtonType{Color = 0, Texture};
@@ -14,7 +14,7 @@ public:
 
 	Button(ButtonType Type, const f32 width, const f32 height, const f32 textScale = 1.0f);
 	~Button();
-	// ONLY CALL AFTER ALL PUSHBACKS. OTHERWISE THE VECTOR CONTAINER WILL CALL THE DTOR.
+
 	void Update();
 	void Render();
 	void Set_Position(const AEVec2 pos);

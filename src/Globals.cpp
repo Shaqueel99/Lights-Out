@@ -19,9 +19,6 @@ namespace GAMEPLAY_MISC {
 }
 namespace fontID {
 	char Roboto							= 0;
-	char Courier						= 0;
-	char Pixel_Digivolve				= 0;
-	char Strawberry_Muffins_Demo		= 0;
 }
 namespace Mesh {
 	AEGfxVertexList* Rect				= nullptr;

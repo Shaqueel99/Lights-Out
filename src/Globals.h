@@ -22,9 +22,6 @@ namespace GAMEPLAY_MISC {
 }
 namespace fontID {
 	extern char Roboto;
-	extern char Strawberry_Muffins_Demo;
-	extern char Courier;
-	extern char Pixel_Digivolve;
 }
 namespace Mesh { // Base Meshes
 	extern AEGfxVertexList* Rect;

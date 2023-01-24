@@ -8,15 +8,14 @@
 #include "UserInterface.h"
 #include "LevelSystem.h"
 #include "Globals.h"
-#include "GameMode.h"
+
 
 #include <array>
 #include <iostream>
 #include <fstream>
 #include <sstream>   
 #include <cstring>
-extern std::array <AudioClass, static_cast<int>(AudioID::Max)> AudioArray;
-extern AudioManager Audio;
+
 extern LevelSystem LevelSys;
 
 static f32 maxY, maxX;
@@ -54,7 +53,7 @@ void Player::Update() {
 	UpdatePlayerAnimationMesh();
 	UpdateColliders();
 	GravityManager();
-	if (hp.current <= 0 && GameModeSetting::GetGameMode() == GameMode::Casual) 
+	if (hp.current <= 0 ) 
 		SetPlayerLose();
 }
 void Player::UpdatePlayerAnimationMesh()
@@ -89,18 +88,13 @@ void Player::Render(void)
 	}
 	UI::DisplayLife(hp.current);
 
-	if (GAMEPLAY_MISC::DEBUG_MODE) {
-		collider.Draw();
-	}
+
 }
 void Player::SetPlayerLose(void)
 {
 	lose = true;
 	active = false; 
-	if (!isSoundPlayed) {
-		Audio.playAudio(AudioArray[static_cast<int>(AudioID::PlayerLose)], AudioID::PlayerLose);
-		isSoundPlayed = true;
-	}
+	
 }
 void Player::LoadTex(void) {
 	playerTex		= AEGfxTextureLoad(FP::PLAYER::SpriteSheetIdle);
@@ -132,11 +126,9 @@ void Player::Update_Position(void)
 
 	if (AEInputCheckCurr(AEVK_D) && GAMEPLAY_MISC::WASD_KEYS || AEInputCheckCurr(AEVK_RIGHT) && GAMEPLAY_MISC::ARROW_KEYS)
 	{
-		if (sprite.pos.x + sprite.width / 2 <= maxX || GAMEPLAY_MISC::DEBUG_MODE) {
+		if (sprite.pos.x + sprite.width / 2 <= maxX ) {
 
-			if(GAMEPLAY_MISC::DEBUG_MODE)
-				sprite.pos.x += PLAYER_CONST::DEBUGSPEED * g_dt;
-			else
+			
 				sprite.pos.x += PLAYER_CONST::SPEED * g_dt;
 		}
 
@@ -148,11 +140,8 @@ void Player::Update_Position(void)
 	if (AEInputCheckCurr(AEVK_A) && GAMEPLAY_MISC::WASD_KEYS || AEInputCheckCurr(AEVK_LEFT) && GAMEPLAY_MISC::ARROW_KEYS)
 	if (AEInputCheckCurr(AEVK_A) && GAMEPLAY_MISC::WASD_KEYS || AEInputCheckCurr(AEVK_LEFT) && GAMEPLAY_MISC::ARROW_KEYS)
 	{
-		if (sprite.pos.x >= 0 - sprite.width / 2.0f || GAMEPLAY_MISC::DEBUG_MODE) {
-
-			if (GAMEPLAY_MISC::DEBUG_MODE)
-				sprite.pos.x -= PLAYER_CONST::DEBUGSPEED * g_dt;
-			else
+		if (sprite.pos.x >= 0 - sprite.width / 2.0f ){
+			
 				sprite.pos.x -= PLAYER_CONST::SPEED * g_dt;
 		}
 		if (direction != SpriteDirection::Left) {
@@ -160,9 +149,7 @@ void Player::Update_Position(void)
 			direction = SpriteDirection::Left;
 		}
 	}
-	if (GAMEPLAY_MISC::DEBUG_MODE) {
-		ApplyDebugMovements();
-	}
+	
 	AEGfxSetCamPosition(sprite.pos.x - AEGetWindowWidth() / 2, AEGetWindowHeight() / 2 - sprite.pos.y);
 }
 
@@ -231,7 +218,7 @@ void Player::CheckJumpInputs()
 		}
 		else if (AEInputCheckReleased(AEVK_SPACE)) {
 			jump = true;
-			Audio.playAudio(AudioArray[static_cast<int>(AudioID::Jump)], AudioID::Jump);
+			
 		}
 		if (chargedjump_counter < 0.0f) {
 			chargedjump = true;
@@ -261,26 +248,25 @@ void Player::ChangeDirection() {
 
 void Player::Respawn(void)
 {
-	if (--hp.current <= 0) 
-	active				= false;
-	jump				= false;
-	jumpvel				= PLAYER_CONST::JUMPVEL;
-	sprite.pos			= startingPos;
-	chargedjump			= false;
-	chargedjumpvel		= PLAYER_CONST::CHARGED_JUMPVEL;
-	sprite.rotation		= 0;
-	gravityMultiplier	= GAMEPLAY_CONST::BASE_GRAVITY_MULTIPLIER;
+	if (--hp.current <= 0)
+		active = false;
+	jump = false;
+	jumpvel = PLAYER_CONST::JUMPVEL;
+	sprite.pos = startingPos;
+	chargedjump = false;
+	chargedjumpvel = PLAYER_CONST::CHARGED_JUMPVEL;
+	sprite.rotation = 0;
+	gravityMultiplier = GAMEPLAY_CONST::BASE_GRAVITY_MULTIPLIER;
 	chargedjump_counter = PLAYER_CONST::CHARGEDJUMP_COUNTER;
 
 	sprite.Set_Texture(playerTex);
-	if(active)
-		Audio.playAudio(AudioArray[static_cast<int>(AudioID::PlayerDeath)], AudioID::PlayerDeath);
+	if (active){
 
-	if (GameModeSetting::GetGameMode() == GameMode::TimeAttack) {
-		Audio.playAudio(AudioArray[static_cast<int>(AudioID::PlayerDeath)], AudioID::PlayerDeath);
+
+
 		Utils::RestartLevel();
-		return;
-	}
+	return;
+}
 }
 void Player::Reset(void) // For level restart.
 {
@@ -319,12 +305,12 @@ void Player::GravityManager(void)
 
 	if (gravity && !jump && !chargedjump)
 	{
-		if (!GAMEPLAY_MISC::DEBUG_MODE) {
+		
 			if (gravityMultiplier <= 35.0f) {
 				gravityMultiplier += g_dt * 20;
 			}
 			sprite.pos.y += (gravityStrength * (g_dt * gravityMultiplier));
-		}
+		
 	}
 }
 
@@ -336,35 +322,7 @@ void Player::SetPlayerWin(void)
 		LevelSys.UnlockNext();
 		playerWin = true;
 
-		////std::ifstream ifs(UsernameFile);
-		////static std::string line;
-		////static std::string data;
-		////std::string word = "score:"; std::string word2 = "username:";
-		////size_t pos = 0; size_t pos2 = 0;
-		////std::string replace = std::to_string(playerscore);
-
-		////if (ifs.is_open()) {
-		////	getline(ifs, line);
-
-		////	pos = line.find(word);
-		////	pos2 = line.find(word2);
-		////	if (pos != std::string::npos)
-		////	{
-		////		pos += word.length();
-		////		pos2 += word2.length();
-		////		playername = line.substr(pos2, line.size() - 1);
-		////		line.replace(pos, replace.length(), std::to_string(playerscore));
-		////	}
-		////	ifs.close();
-		////}
-
-		////std::ofstream ofs(UsernameFile);
-
-		////if (ofs.is_open())
-		////{
-		////	ofs << line;
-		////	ofs.close();
-		////}
+		
 	}
 }
 
@@ -380,19 +338,19 @@ void Player::CheckEnemyCollision(std::vector <Enemies>& enemy)
 			{
 				if (Utils::ColliderAABB(enemy[i].collider.top.pos, enemy[i].collider.top.width, enemy[i].collider.top.height, 
 					collider.bottom.pos, sprite.width, collider.bottom.height)) {
-					if (!GAMEPLAY_MISC::DEBUG_MODE) {
+					
 						jump = true;
 						jumpvel = bounceVelocity;
 						gravityMultiplier = GAMEPLAY_CONST::BASE_GRAVITY_MULTIPLIER;
 						enemy[i].KillEnemy();
 						continue;
-					}
+					
 				}
 				else {
-					if (!GAMEPLAY_MISC::DEBUG_MODE) {
+					
 						Particles::Create(sprite.pos, AEVec2{ 0, -1 }, Color{ 255.0f, 255.0f, 255.0f, 255.0f }, 1, 250.0f, 150.0f, 40.0f, 5.0f, playerParticle);
 							Respawn();
-					}
+					
 				}
 			}
 		}
@@ -412,8 +370,8 @@ void Player::CreatePlayer(Player& player, const AEVec2 pos, const f32 width, con
 	player.collider.SetWidthHeight(player.collider.bottom, width /2.0f, 5.0f);
 	player.collider.SetMeshes();
 
-	player.hp.max = GameModeSetting::GetGameMode() == GameMode::Casual	? PLAYER_CONST::CASUAL_MODE_HP_MAX
-																		: PLAYER_CONST::TIMEATK_MODE_HP_MAX;
+	player.hp.max = 3;
+																		
 
 	player.hp.current = player.hp.max;
 

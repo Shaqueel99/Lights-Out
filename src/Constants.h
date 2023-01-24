@@ -46,34 +46,13 @@ namespace FILE_PATHS {
 		extern const char* Guide7;
 	}
 	namespace BUTTONS {
-		extern const char* RedBtn;
-		extern const char* BlueBtn;
-		extern const char* GreenBtn;
-		extern const char* LockedBtn;
+		extern const char* Btn;
 	}
 	namespace FONT {
 		extern const char* Roboto;
-		extern const char* Courier;
-		extern const char* Pixel_Digivolve;
-		extern const char* Strawberry_Muffins_Demo;
 	}
-	namespace CREDITS {
-		extern const char* Screen1;
-		extern const char* Screen2;
-		extern const char* Screen3;
-		extern const char* Screen4;
-	}
-	namespace SFX {
-		extern const char* Jump;
-		extern const char* Boink;
-		extern const char* SlimeDeath;
-		extern const char* PlayerDeath;
-		extern const char* PlayerLose;
-		extern const char* SquirrelDeath;
-	}
-	namespace BGM {
-		extern const char* Gameplay;
-	}
+	
+
 	namespace UI {
 		extern const char* HeartSprite;
 	}

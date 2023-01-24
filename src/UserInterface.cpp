@@ -9,7 +9,7 @@
 #include "MainMenu.h"
 #include "Player.h"
 #include "Globals.h"
-#include "GameMode.h"
+
 
 #include <fstream>
 #include <string>
@@ -28,7 +28,7 @@ static std::vector <Button> QuitBtn;
 static Graphics::Text QuitText;
 static AEVec2 ScreenMid;
 static Image lives;
-static GameMode gameMode;
+
 
 extern Player Jumperman;
 
@@ -40,9 +40,9 @@ void UI::Init() {
 	LevelDisplay.color.Set(Color{0, 0, 0, 255});
 	TimerDisplay.color.Set(Color{ 0, 0, 0, 255 });
 
-	FPS_Display.SetFontID(fontID::Courier);
-	LevelDisplay.SetFontID(fontID::Courier);
-	TimerDisplay.SetFontID(fontID::Courier);
+	FPS_Display.SetFontID(fontID::Roboto);
+	LevelDisplay.SetFontID(fontID::Roboto);
+	TimerDisplay.SetFontID(fontID::Roboto);
 
 	memset(strBuffer, 0, 100 * sizeof(char));
 	memset(strBuffer1, 0, 100 * sizeof(char));
@@ -50,7 +50,7 @@ void UI::Init() {
 
 	lives.Load(FP::UI::HeartSprite, 35.0f, 35.0f, AEVec2Zero());
 
-	gameMode = GameModeSetting::GetGameMode();
+
 }
 
 void UI::Update() {
@@ -61,14 +61,7 @@ void UI::Update() {
 
 	sprintf_s(strBuffer, "FPS: %.2f", AEFrameRateControllerGetFrameRate());
 
-	if (gameMode == GameMode::TimeAttack) {
-		sprintf_s(strBuffer2, "Time Remaining: %.2f", GAMEPLAY_MISC::TimeAttack_remaining);
-		if(!GAMEPLAY_MISC::PAUSED && GAMEPLAY_MISC::TimeAttack_remaining >= 0.0f)
-			GAMEPLAY_MISC::TimeAttack_remaining -= g_dt;
 
-		TimeAttackGameMode::CheckTimer();
-	}
-	else
 		sprintf_s(strBuffer2, "Time Elapsed: %.2f", GAMEPLAY_MISC::app_time);
 
 	FPS_Display.SetText(strBuffer);
@@ -111,26 +104,27 @@ void UI::PausedInit()
 		PausedBtn.push_back(Button(ButtonType::Color, BtnWidth, BtnHeight, BtnTextScale));
 	}
 	PausedBtn[0].Set_Callback(Utils::TogglePause);
+	PausedBtn[0].Set_TextColor(Color{ 255.0f, 255.0f, 255.0f, 255.0f });
 	PausedBtn[0].Set_Text("Resume");
-	PausedBtn[0].ChangeStateColor(ButtonState::Idle, Color{ 229.0f, 145.0f, 255.0f, 255.0f });
 
-	PausedBtn[1].Set_Callback(AudioManager::ToggleMuteAll);
-	PausedBtn[1].ChangeStateColor(ButtonState::Idle, Color{ 229.0f, 145.0f, 255.0f, 255.0f });
+
+	PausedBtn[1].Set_Callback(Utils::ToggleFullscreen);
+	PausedBtn[1].Set_TextColor(Color{ 255.0f, 255.0f, 255.0f, 255.0f });
 
 	PausedBtn[2].Set_Callback(Utils::ToggleFullscreen);
-	PausedBtn[2].ChangeStateColor(ButtonState::Idle, Color{ 229.0f, 145.0f, 255.0f, 255.0f });
+	PausedBtn[2].Set_TextColor(Color{ 255.0f, 255.0f, 255.0f, 255.0f });
 
 	PausedBtn[3].Set_Text("Exit to Main Menu");
 	PausedBtn[3].Set_Callback(Utils::ReturnToMenu);
-	PausedBtn[3].ChangeStateColor(ButtonState::Idle, Color{ 229.0f, 145.0f, 255.0f, 255.0f });
+	PausedBtn[3].Set_TextColor(Color{ 255.0f, 255.0f, 255.0f, 255.0f });
 
 	PausedBtn[4].Set_Text("Quit Game");
 	PausedBtn[4].Set_Callback(Utils::ToggleQuitUI);
-	PausedBtn[4].ChangeStateColor(ButtonState::Idle, Color{ 229.0f, 145.0f, 255.0f, 255.0f });
+	PausedBtn[4].Set_TextColor(Color{ 255.0f, 255.0f, 255.0f, 255.0f });
 
 	PausedBtn[5].Set_Text("Restart Level");
 	PausedBtn[5].Set_Callback(Utils::RestartLevel);
-	PausedBtn[5].ChangeStateColor(ButtonState::Idle, Color{ 229.0f, 145.0f, 255.0f, 255.0f });
+	PausedBtn[5].Set_TextColor(Color{ 255.0f, 255.0f, 255.0f, 255.0f });
 
 
 	const float PosY{ WindHeight - BtnHeight / 2.0f };
@@ -146,7 +140,7 @@ void UI::PausedInit()
 
 void UI::PausedUpdate()
 {
-	AudioManager::GetGlobalMute() == true ? PausedBtn[1].Set_Text("Unmute") 
+	Utils::GetFullscreenStatus() == true ? PausedBtn[1].Set_Text("Unmute")
 										  : PausedBtn[1].Set_Text("Mute");
 
 	Utils::GetFullscreenStatus() == true ? PausedBtn[2].Set_Text("Windows Mode") 
@@ -189,17 +183,18 @@ void UI::QuitInit()
 		QuitBtn.push_back(Button(ButtonType::Color, BtnWidth, BtnHeight, BtnTextScale));
 	}
 	QuitBtn[0].Set_Text("Quit");
-	QuitBtn[0].ChangeStateColor(ButtonState::Idle, Color{ 255.0f, 0.0f, 0.0f, 255.0f });
+	QuitBtn[0].Set_TextColor(Color{ 255.0f, 255.0f, 255.0f, 255.0f });
 	QuitBtn[0].Set_Callback(Utils::ExitGame);
 	QuitBtn[0].Set_Position(AEVec2Set(ScreenMid.x - BtnWidth, ScreenMid.y + BtnHeight + BtnYOffset));
 
 	QuitBtn[1].Set_Text("Cancel");
+	QuitBtn[1].Set_TextColor(Color{ 255.0f, 255.0f, 255.0f, 255.0f });
 	QuitBtn[1].Set_Callback(Utils::ToggleQuitUI);
 	QuitBtn[1].Set_Position(AEVec2Set(ScreenMid.x + BtnWidth, ScreenMid.y + BtnHeight + BtnYOffset));
 
 	QuitText.SetText("Do you want to exit the game?");
 	QuitText.SetFontID(fontID::Roboto);
-	QuitText.SetTextColor(Color{ 255.0f, 0.0f, 0.0f, 255.0f });
+	QuitText.SetTextColor(Color{ 255.0f, 255.0f, 255.0f, 255.0f });
 	QuitText.SetTextScale(1.0f);
 }
 
